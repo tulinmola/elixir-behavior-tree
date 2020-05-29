@@ -152,3 +152,45 @@ Taking care in configuration to add custom base module:
 config :behavior, Behavior.Parser,
   base_modules: [MyApp.Behavior]
 ```
+
+## Commit guidelines
+
+Having a good guideline for creating commits and sticking to it makes working
+with Git and collaborating with others a lot easier. Please, follow these simple
+wide used recommended rules:
+
+- Always use english language.
+- Separate subject from body with a blank line.
+- Limit the subject line to 50 characters.
+- Capitalize the subject line.
+- Do not end the subject line with a period.
+- Use the imperative mood in the subject line, that is as if you were
+commanding someone. Start the line with "Fix", "Add", "Change" instead
+of "~~Fixed~~", "~~Added~~", "~~Changed~~".
+- Wrap the body at 72 characters.
+
+Here is the classic long commit example:
+
+> ```
+> Short (50 chars or less) summary of changes
+>
+> More detailed explanatory text, if necessary.  Wrap it to about 72
+> characters or so.  In some contexts, the first line is treated as the
+> subject of an email and the rest of the text as the body.  The blank
+> line separating the summary from the body is critical (unless you omit
+> the body entirely); tools like rebase can get confused if you run the
+> two together.
+>
+> Further paragraphs come after blank lines.
+>
+>   - Bullet points are okay, too
+>
+>   - Typically a hyphen or asterisk is used for the bullet, preceded by a
+>     single space, with blank lines in between, but conventions vary here
+> ```
+
+### References
+
+* https://git-scm.com/book/en/v2/Distributed-Git-Contributing-to-a-Project
+* https://chris.beams.io/posts/git-commit/
+* https://github.com/erlang/otp/wiki/writing-good-commit-messages
