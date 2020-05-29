@@ -5,11 +5,10 @@ defmodule Behavior.DecoratorNode do
       @type child :: any
 
       @type t :: %__MODULE__{
-              type: atom,
               child: child
             }
 
-      defstruct [:type, :child]
+      defstruct [:child]
     end
   end
 end

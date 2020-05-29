@@ -1,15 +1,14 @@
 defmodule Behavior.CompositeNode do
   @spec __using__(atom) :: any
-  defmacro __using__(type) do
+  defmacro __using__(_type) do
     quote do
       @type child :: any
 
       @type t :: %__MODULE__{
-              type: atom,
               children: [child]
             }
 
-      defstruct type: unquote(:"#{type}"), children: []
+      defstruct children: []
     end
   end
 end
