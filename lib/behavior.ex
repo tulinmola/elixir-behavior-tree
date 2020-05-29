@@ -8,8 +8,8 @@ defmodule Behavior do
   @type state :: map
   @type task_result :: {task_status, task, state, seconds}
 
-  @spec parse(binary) :: tree
-  def parse(filename) do
+  @spec parse!(binary) :: tree
+  def parse!(filename) do
     filename
     |> File.read!()
     |> Parser.parse()

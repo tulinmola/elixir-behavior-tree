@@ -55,21 +55,55 @@ config :behavior, Behavior.Parser,
 Parse with:
 
 ```elixir
-> root = Behavior.parse!("filename.json")
+iex(1)> root = Behavior.parse!("filename.json")
+%Behavior.SelectorNode{
+  children: [
+    %Behavior.SequenceNode{
+      children: [
+        %Behavior.LogNode{
+          message: "I will succeed passing to the next sequence children"
+        },
+        %Behavior.InverterNode{
+          child: %Behavior.LogNode{
+            message: "I will fail due to inverter, making this sequence fail"
+          }
+        }
+      ]
+    },
+    %Behavior.LogNode{message: "I will make selector succeed!"}
+  ]
+}
 ```
 
 Creating task:
 
 ```elixir
-> task = Behavior.create_task(root)
-%Behavior.SelectorTask{...}
+iex(2)> task = Behavior.create_task(root)
+%Behavior.SelectorTask{
+  children: [%Behavior.LogNode{message: "I will make selector succeed!"}],
+  current: %Behavior.SequenceTask{
+    children: [
+      %Behavior.InverterNode{
+        child: %Behavior.LogNode{
+          message: "I will fail due to inverter, making this sequence fail"
+        }
+      }
+    ],
+    current: %Behavior.LogTask{
+      message: "I will succeed passing to the next sequence children"
+    }
+  }
+}
 ```
 
-And running:
+And running task:
 
 ```elixir
-> Behavior.run_task(task, %{foo: "bar"}, 1.5)
-{:success, %Behavior.SelectorTask{...}, %{foo: "bar}, 1.5}
+iex(1)> Behavior.run_task(task, %{foo: "bar"}, 1.5)
+[info]  I will succeed passing to the next sequence children
+[info]  I will fail due to inverter, making this sequence fail
+[info]  I will make selector succeed!
+{:success, %Behavior.SelectorTask{...}, %{foo: "bar"}, 1.5}
 ```
 
 ## Add Custom Nodes and Tasks
