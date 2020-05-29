@@ -1,18 +1,27 @@
 defmodule Behavior do
-  @moduledoc """
-  Documentation for Behavior.
-  """
+  alias Behavior.{Node, Parser, Task}
 
-  @doc """
-  Hello world.
+  @type tree :: any
+  @type task :: any
+  @type seconds :: float
+  @type task_status :: :success | :running | :failure
+  @type state :: map
+  @type task_result :: {task_status, task, state, seconds}
 
-  ## Examples
+  @spec parse(binary) :: tree
+  def parse(filename) do
+    filename
+    |> File.read!()
+    |> Parser.parse()
+  end
 
-      iex> Behavior.hello()
-      :world
+  @spec create_task(tree) :: task
+  def create_task(root) do
+    Node.create_task(root)
+  end
 
-  """
-  def hello do
-    :world
+  @spec run_task(task, state, seconds) :: task_result
+  def run_task(task, state, dt) do
+    Task.run(task, state, dt)
   end
 end

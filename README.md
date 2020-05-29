@@ -4,18 +4,70 @@ Very specific behavior tree Elixir implementation.
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `behavior` to your list of dependencies in `mix.exs`:
+The package can be installed by adding `behavior` to your list of dependencies in
+`mix.exs`:
 
 ```elixir
 def deps do
-  [
-    {:behavior, "~> 0.1.0"}
-  ]
+  [{:behavior, git: "https://github.com/tulinmola/elixir-behavior-tree"}]
 end
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/behavior](https://hexdocs.pm/behavior).
+## Configuration
 
+To add custom nodes, just add parent module to config, so parser can find them:
+
+```elixir
+config :behavior, Behavior.Parser,
+  base_modules: [App.Behavior, App2.BehaviorTree]
+```
+
+## Use Example
+
+```json
+{
+  "node": "selector",
+  "children": [
+    {
+      "node": "sequence",
+      "children": [
+        {
+          "node": "log",
+          "message": "I will succeed passing to the next sequence children"
+        },
+        {
+          "node": "inverter",
+          "child": {
+            "node": "log",
+            "message": "I will fail due to inverter, making this sequence fail"
+          }
+        }
+      ]
+    },
+    {
+      "node": "log",
+      "message": "I will make selector succeed!"
+    }
+  ]
+}
+```
+
+Parse with:
+
+```elixir
+> root = Behavior.parse!("filename.json")
+```
+
+Creating task:
+
+```elixir
+> task = Behavior.create_task(root)
+%Behavior.SelectorTask{...}
+```
+
+And running:
+
+```elixir
+> Behavior.run_task(task, %{foo: "bar"}, 1.5)
+{:success, %Behavior.SelectorTask{...}, %{foo: "bar}, 1.5}
+```
