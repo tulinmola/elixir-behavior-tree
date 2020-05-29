@@ -194,3 +194,9 @@ Here is the classic long commit example:
 * https://git-scm.com/book/en/v2/Distributed-Git-Contributing-to-a-Project
 * https://chris.beams.io/posts/git-commit/
 * https://github.com/erlang/otp/wiki/writing-good-commit-messages
+
+## Copyright and License
+
+Copyright (c) 2020, @tulinmola.
+
+This source code is licensed under the [MIT License](LICENSE.md).
